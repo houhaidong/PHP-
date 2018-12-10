@@ -30,3 +30,46 @@ PHP设计模式
  $instance = $SingleInstance::getInstance();
  $instance->getName();
 ```
+
+### 工厂模式
+```php
+//声明一个接口类
+interface db{
+   public function db();
+}
+class mysql implements db(){
+   public function db(){
+       ehco "链接mysql成功";
+   }
+}
+class oracel implements db(){
+   public function db(){
+       echo "链接oracel成功";
+ }
+ 
+ class dbFactory{
+    public static function conn($db){
+        switch($db){
+           case "mysql":
+               rerurn new mysql();
+           break;
+           case "oracel":
+               return new oracel();
+           break;
+           defaule:
+               return new mysql();
+           break;
+        }
+    }
+ }
+ $a = dbFactory::conn("mysql");
+ $a->db();
+ 
+ 
+ 
+ 
+}
+
+
+
+```
