@@ -220,5 +220,71 @@ class pdo implements db_driver
 
 ```
 
+### 观察者模式
+
+当一个对象的状态发生改变时，依赖他的对象会全部收到通知，并更新
+
+```php
+class BuyMilk
+{
+   public $name; 
+   public $price;  //价钱
+   public $store;  //库存
+   public $account;//账户余额
+   
+   //私有变量 用于储存观察者
+   private $_observer = array();
+   
+   public function __contruct($name,$store,$price)
+   {
+     $this->name = $name;
+     $this->store = $store;
+     $this->price = $price;
+   }
+   
+   //添加观察者
+   public function addObserver($observer)
+   {
+      $this->_observer[] = $observer;
+   }
+   
+   //通知观察者
+   public function notify()
+   {
+      foreach($this->_observer as $_observer)
+      {
+         $_observer->update();
+      }
+   }
+   
+   public function buy()
+   {
+      $this->notify();
+   }
+}
+
+class BuyMilkStoreObserver 
+{
+    public function update(BuyMilk $product)
+    {
+        $product->store -=1;
+    }
+}
+
+class BuyMilkMoneyObserver
+{
+    public function update(BuyMilk $product)
+    {
+        $product->account += $product->price;
+    }
+}
+
+$a = new BuyMilk('HD',10,1);
+$a->addObserver(new BuyMilkStoreObserver());
+
+$a->addObserver(new BuyMilkMoneyObserver);
+
+$a->buy();
+```
 
 
