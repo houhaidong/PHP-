@@ -31,7 +31,8 @@ PHP设计模式
  $instance->getName();
 ```
 
-### 工厂模式
+### 工厂模式  
+    用工厂的方法或者类来生成对象，不用再代码中直接new
 ```php
 //声明一个接口类
 interface db{
@@ -73,3 +74,33 @@ class oracel implements db(){
 
 
 ```
+```php
+
+### 注册树模式 
+
+class Register
+{
+   //用于储存实例
+   protected static $objects;
+   //将实例注册到注册树中
+   public static function set($alias,$object)
+   {
+       self::$objects['$alias'] = $object
+   }
+   //获取注册树的实例
+   public static function get($alias)
+   {
+      if(isset(self::$objects[$alias])){
+          return self::$objects[$alias];
+      }else{
+          echo "实例而不存在";
+      }
+   }
+   //销毁注册树的实例
+   public static function __unset($alias)
+   {
+       unset(self::$objects[$alias]);
+   }
+} 
+```
+
