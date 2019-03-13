@@ -162,6 +162,63 @@ class pdo implements db_driver
 
 ```
 
+### 策略模式
+使用场景：
+    1、一个页面A进去要显示A的信息，B进去要显示B的信息，平时的写法就是用if  else 判断，但C要是进去，我们还得更改if else很麻烦，我们用了策略者模式后，就不用添加else了，直接添加一个策略就可以
+    2、超市促销活动，原价，八折，满300减50，就可以用策略模式
+
+```php
+ interface StrategyAbstract
+ {
+     function action();
+ }
+ 
+ //满减活动  manjian.php
+ class manjian implements StrategyAbstract
+ {
+    public function action()
+    {
+       echo "满减";
+    }
+ }
+ 
+ //打八折活动  dazhe.php
+ class dazhe implements StrategyAbstract
+ {
+    punlic function action()
+    {
+      echo "打折";
+    }
+ }
+ 
+ //策略工厂类 
+ class strategy
+ {
+    private $object;
+    
+    //初始时传入具体的策略
+    public function __contruct($model)
+    {
+       $this->object = $model;
+    }
+    
+    //执行策略
+    public function get()
+    {
+       $this->object->action()
+    }
+    
+ }
+ 
+ //执行满减的策略
+ $a = new strategy(new manjian());
+ $a->get();
+ 
+ //执行打折的策略
+ $a = new strategy(new dazhe())
+ $a->get();
+
+```
 
 
 
