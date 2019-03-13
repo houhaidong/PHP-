@@ -104,4 +104,62 @@ class Register
    }
 } 
 ```
+### 适配器模式
+
+```php
+interface db_driver
+{
+   function connect();
+   function query();
+}
+
+//mysql数据库实现
+class mysql implements db_driver
+{
+   public function connect()
+   {
+      /*具体实现代码*/
+   }
+   public function query()
+   {
+      /*具体实现代码*/
+   }
+}
+
+//pdo数据库实现
+class pdo implements db_driver
+{
+   public function connect()
+   {
+      /*具体实现代码*/
+   }
+   public function query()
+   {
+      /*具体实现代码*/
+   }
+ }
+ //定义适配器类
+ class db_adapter
+ {
+    private $db;
+    public function __construct($db_obj)
+    {
+       $this->db = $db_obj;
+    }
+    
+    function connect()
+    {
+      $this->db->connect();
+    }
+    function query($sql)
+    {
+      $this->query($sql)
+    }
+ }
+  $db = new db_adapter(new mysql());
+
+```
+
+
+
 
